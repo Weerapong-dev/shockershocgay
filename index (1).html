@@ -8,18 +8,25 @@
   <ul id="sheet-data"></ul>
 
   <script>
-    fetch('https://weerapong-dev.github.io/shockershocgay/')
-      .then(res => res.json())
-      .then(data => {
-        const ul = document.getElementById('sheet-data');
+  fetch('https://weerapong-dev.github.io/shockershocgay/')
+    .then(res => res.json())
+    .then(data => {
+      const ul = document.getElementById('sheet-data');
+      if(Array.isArray(data)) {
         data.forEach(row => {
           const li = document.createElement('li');
-          li.textContent = row.name + ' - ' + row.email;
+          li.textContent = row.name ? (row.name + ' - ' + row.email) : JSON.stringify(row);
           ul.appendChild(li);
         });
-      });
-  </script>
+      } else {
+        const li = document.createElement('li');
+        li.textContent = typeof data === 'object' ? JSON.stringify(data) : data;
+        ul.appendChild(li);
+      }
+    });
+</script>
 </body>
 </html>
+
 
 
